@@ -1,30 +1,38 @@
 export default {
 	ID: 'ID',
 	LOG_OUT: 'Log out',
-	LANGUAGES:{
+	LANGUAGES: {
 		en: 'English',
-    ar: 'عربى',
+		ar: 'عربى',
 	},
-	NAV: {Products:'Products',
-Pricing:'Pricing',
-Blog:'Blog',
+	NOTIFICATION:{
+		TOOLTIP:'Notification'
 	},
-SETTINGS:{
-Account:'Account',
-Dashboard:'Dashboard',
-Logout:'Logout'
-},
-		DAYS: {
-			TITLE: 'Business Hours',
-			Sunday: 'Sunday',
-			Monday: 'Monday',
-			Tuesday: 'Tuesday',
-			Wednesday: 'Wednesday',
-			Thursday: 'Thursday',
-			Friday: 'Friday',
-			Saturday: 'Saturday',
+	NAV: {
+			TOOLTIPS:{
+				LANGUAGES:'Languages',	
+				SETTINGS:'Settings'
 		},
-	
+		Products: 'Products',
+		Pricing: 'Pricing',
+		Blog: 'Blog',
+	},
+	SETTINGS: {
+		Account: 'Account',
+		Dashboard: 'Dashboard',
+		Logout: 'Logout'
+	},
+	DAYS: {
+		TITLE: 'Business Hours',
+		Sunday: 'Sunday',
+		Monday: 'Monday',
+		Tuesday: 'Tuesday',
+		Wednesday: 'Wednesday',
+		Thursday: 'Thursday',
+		Friday: 'Friday',
+		Saturday: 'Saturday',
+	},
+NOT_AUTHORIZED_MSG :'Sorry.. This content is not authorized',
 	GO_TO_HOMEPAGE: 'GO TO HOMEPAGE',
 	UNEXPECTED_ERROR: 'Unexpected Error',
 	ERRORS: {

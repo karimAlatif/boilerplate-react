@@ -5,7 +5,14 @@ export default {
 		ar: 'عربى',
     en: 'English'
 	},
+		NOTIFICATION:{
+		TOOLTIP:'تنبيه'
+	},
 	NAV: {
+		TOOLTIPS:{
+			LANGUAGES:'تغيير اللغة',
+			SETTINGS:'إعدادات'
+		},
 		Products:'منتجات', 
 		Pricing:'التسعير', 
 		Blog:'مدونة'
@@ -24,6 +31,7 @@ Logout:'تسجيل خروج'
 		Friday: 'جمعة',
 		Saturday: 'السبت',
 	},
+NOT_AUTHORIZED_MSG :' عفوا .. هذا المحتوى غير مصرح به',
 	GO_TO_HOMEPAGE: 'الانتقال إلى الصفحة الرئيسية',
 	UNEXPECTED_ERROR: 'خطأ غير متوقع',
 	ERRORS: {

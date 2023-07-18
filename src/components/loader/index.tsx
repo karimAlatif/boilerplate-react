@@ -1,6 +1,6 @@
-import MUIBox, { BoxProps } from '@mui/material/Box';
-import CircularProgress from '@mui/material/CircularProgress';
 import { styled } from '@mui/material/styles';
+import CircularProgress from '@mui/material/CircularProgress';
+import MUIBox, { BoxProps } from '@mui/material/Box';
 
 const Box = styled(MUIBox)<BoxProps>(({ theme }) => ({
 	background: theme.palette.background.paper

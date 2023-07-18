@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useTheme } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -11,10 +12,24 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import Badge from '@mui/material/Badge';
 import AdbIcon from '@mui/icons-material/Adb';
 import GTranslateIcon from '@mui/icons-material/GTranslate';
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+
 import { useTranslation } from 'react-i18next';
-import { user_prefered_language } from '../../shared/constants';
+import {
+  NovuProvider,
+  PopoverNotificationCenter,
+  IMessage,
+} from '@novu/notification-center';
+
+import { user_prefered_language, user_prefered_theme_mode } from '../../shared/constants';
+import useUserData from '../../shared/hooks/useUserData';
+import { ColorModeContext } from '../../shared/Contexts/ColorMode';
 
 const languages = ['en', 'ar',];
 const pages = ['Products', 'Pricing', 'Blog'];
@@ -22,6 +37,9 @@ const settings = ['Account', 'Dashboard', 'Logout'];
 
 function ResponsiveAppBar() {
   const { t, i18n } = useTranslation();
+  const { user } = useUserData()
+  const { palette: { mode, secondary } } = useTheme()
+  const colorMode = React.useContext(ColorModeContext);
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElLang, setAnchorElLang] = React.useState<null | HTMLElement>(null);
@@ -57,9 +75,16 @@ function ResponsiveAppBar() {
     handleCloseLangMenu();
   }
 
+  function onNotificationClick(message: IMessage) {
+    // your logic to handle the notification click
+    if (message?.cta?.data?.url) {
+      window.location.href = message.cta.data.url;
+    }
+  }
+
 
   return (
-    <AppBar position="static" color='secondary'>
+    <AppBar position="static" color='primary'>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -141,15 +166,48 @@ function ResponsiveAppBar() {
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, color: 'inherit', display: 'block' }}
               >
                 {t(`NAV.${page}`)}
               </Button>
             ))}
           </Box>
           <Box gap={2} display='flex'>
+            <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
+              {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+            </IconButton>
+
+            <NovuProvider
+              // subscriberId={`${projectId}_${user?.sub}`}
+              subscriberId={`${user?.sub}`}
+              applicationIdentifier={import.meta.env.VITE_NOVU_IDENTIFIER}
+              backendUrl={import.meta.env.VITE_NOVU_URL}
+              socketUrl={import.meta.env.VITE_NOVU_SOCKET_URL}
+            >
+              <PopoverNotificationCenter
+                colorScheme={'light'}
+                // colorScheme={mode || 'light'}
+                onNotificationClick={onNotificationClick}
+              >
+                {({ unseenCount }) =>
+
+                  <Tooltip title={`${unseenCount} ${t('NOTIFICATION.TOOLTIP')} `}>
+                    <IconButton color="inherit">
+                      {unseenCount && unseenCount > 0 ?
+                        <Badge badgeContent={unseenCount} color="secondary">
+                          <NotificationsActiveIcon />
+                        </Badge>
+                        :
+                        <NotificationsNoneIcon />
+                      }
+                    </IconButton>
+                  </Tooltip>
+                  // <NotificationBell unseenCount={unseenCount} />
+                }
+              </PopoverNotificationCenter>
+            </NovuProvider>
             <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open Languages">
+              <Tooltip title={t('NAV.TOOLTIPS.LANGUAGES')}>
                 <IconButton color="inherit" onClick={handleOpenLangMenu} sx={{ gap: 2 }}>
                   <GTranslateIcon />
                 </IconButton>
@@ -180,9 +238,12 @@ function ResponsiveAppBar() {
               </Menu>
             </Box>
             <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
+              <Tooltip title={t('NAV.TOOLTIPS.SETTINGS')}>
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }} >
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <Avatar alt={user?.name} title={user?.name} variant='circular' color='secondary'
+                    sx={{ bgcolor: secondary.main }}>
+                    {user?.name[0].toUpperCase()}
+                  </Avatar>
                 </IconButton>
               </Tooltip>
               <Menu
@@ -201,6 +262,9 @@ function ResponsiveAppBar() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
+                {/* <MenuItem key={'theme_mode'} onClick={handleChangeTheme}>
+                  <Typography textAlign="center">Change Theme</Typography>
+                </MenuItem> */}
                 {settings.map((setting) => (
                   <MenuItem key={setting} onClick={handleCloseUserMenu}>
                     <Typography textAlign="center">{t(`SETTINGS.${setting}`)}</Typography>

@@ -12,10 +12,12 @@ const MainLayout = ({ children }: Props) => {
   const { i18n } = useTranslation();
 
   return (
-    <Box width='100vw' height='100vh' dir={i18n.dir()}>
-      <NavBar />
-      {children}
-    </Box>
+    <>
+      <Box width='100vw' height='100vh' dir={i18n.dir()}>
+        <NavBar />
+        {children}
+      </Box>
+    </>
   )
 }
 

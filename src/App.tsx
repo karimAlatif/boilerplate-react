@@ -21,6 +21,10 @@ import MainLayout from './components/MainLayout';
 
 function App() {
   const userPreferedLanguage = localStorage.getItem(user_prefered_language);
+
+  if (!userPreferedLanguage) {
+    localStorage.setItem(user_prefered_language, 'ar');
+  }
   // Initialize the i18n library with en as the default lang
   i18n.init({
     lng: userPreferedLanguage || 'en',
@@ -34,12 +38,12 @@ function App() {
     },
   });
   return (
-    <AuthShield>
-      <StrictMode>
-        <I18nextProvider i18n={i18n}>
-          <Suspense fallback={'..loading'}>
-            <StyledEngineProvider injectFirst>
-              <AppsTheme>
+    <I18nextProvider i18n={i18n}>
+      <Suspense fallback={'..loading'}>
+        <StyledEngineProvider injectFirst>
+          <AppsTheme>
+            <AuthShield>
+              <StrictMode>
                 <BrowserRouter>
                   <ErrorBoundary>
                     <MainLayout>
@@ -47,12 +51,12 @@ function App() {
                     </MainLayout>
                   </ErrorBoundary>
                 </BrowserRouter>
-              </AppsTheme>
-            </StyledEngineProvider>
-          </Suspense>
-        </I18nextProvider>
-      </StrictMode>
-    </AuthShield>
+              </StrictMode>
+            </AuthShield>
+          </AppsTheme>
+        </StyledEngineProvider>
+      </Suspense>
+    </I18nextProvider>
   )
 }
 

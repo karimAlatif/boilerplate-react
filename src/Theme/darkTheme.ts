@@ -2,10 +2,10 @@ import { createTheme } from '@mui/material/styles';
 // import { bgBG as pickersBgBG, } from '@mui/x-date-pickers/locales';
 import { bgBG as coreBgBG } from '@mui/material/locale';
 import { blueGrey as primary, orange as secondary } from '@mui/material/colors';
-export const lightTheme = createTheme(
+export const darkTheme = createTheme(
 	{
 		palette: {
-			mode: 'light',
+			mode: 'dark',
 			primary: primary,
 			// primary: {
 			// 	main: '#03a9f4',
