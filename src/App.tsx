@@ -1,34 +1,58 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { Suspense, StrictMode } from 'react';
+import i18n from 'i18next';
+import { I18nextProvider } from 'react-i18next';
+import en from './i18n/en';
+import ar from './i18n/ar';
+import { Routes } from './router';
+import { BrowserRouter } from 'react-router-dom';
+import AppsTheme from './Theme/theme';
+import StyledEngineProvider from '@mui/material/StyledEngineProvider';
+import '@fontsource/cairo/400.css';
+import '@fontsource/cairo/500.css';
+import '@fontsource/cairo/600.css';
+import '@fontsource/cairo/700.css';
+import ErrorBoundary from './components/ErrorBoundary';
+import { user_prefered_language } from './shared/constants';
+
 import './App.css'
+import AuthShield from './components/auth/AuthShield';
+import NavBar from './components/NavBar';
+import MainLayout from './components/MainLayout';
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const userPreferedLanguage = localStorage.getItem(user_prefered_language);
+  // Initialize the i18n library with en as the default lang
+  i18n.init({
+    lng: userPreferedLanguage || 'en',
+    resources: {
+      en: {
+        translation: en,
+      },
+      ar: {
+        translation: ar,
+      },
+    },
+  });
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <AuthShield>
+      <StrictMode>
+        <I18nextProvider i18n={i18n}>
+          <Suspense fallback={'..loading'}>
+            <StyledEngineProvider injectFirst>
+              <AppsTheme>
+                <BrowserRouter>
+                  <ErrorBoundary>
+                    <MainLayout>
+                      <Routes />
+                    </MainLayout>
+                  </ErrorBoundary>
+                </BrowserRouter>
+              </AppsTheme>
+            </StyledEngineProvider>
+          </Suspense>
+        </I18nextProvider>
+      </StrictMode>
+    </AuthShield>
   )
 }
 

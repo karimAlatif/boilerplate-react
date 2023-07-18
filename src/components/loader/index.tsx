@@ -1,14 +1,30 @@
-import React from 'react';
+import MUIBox, { BoxProps } from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
+import { styled } from '@mui/material/styles';
 
-type Props = {};
+const Box = styled(MUIBox)<BoxProps>(({ theme }) => ({
+	background: theme.palette.background.paper
+}));
 
-const Loader = (props: Props) => {
-
+export default function Loader({
+	fullHeight = true,
+	fullWidth = true,
+}: {
+	fullHeight?: boolean;
+	fullWidth?: boolean;
+}) {
 	return (
-		<div>
-			<h1>Loading...</h1>
-		</div>
+		<Box
+			display="flex"
+			justifyContent="center"
+			alignItems="center"
+			height={fullHeight ? '100%' : 'auto'}
+			width={fullWidth ? '100%' : 'auto'}
+		>
+			<CircularProgress
+				size={fullHeight && fullWidth ? 32 : 16}
+				color="primary"
+			/>
+		</Box>
 	);
-};
-
-export default Loader;
+}
