@@ -4,7 +4,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { lightTheme } from './lightTheme';
 import { useTranslation } from 'react-i18next';
 import { user_prefered_theme_mode } from '../shared/constants';
-import { ColorModeContext } from '../shared/Contexts/ColorMode';
+import { UserPreferedContext } from '../shared/Contexts/UserPreferedContext';
 import { darkTheme } from './darkTheme';
 
 interface Props {
@@ -27,13 +27,21 @@ function AppsTheme({ children }: Props) {
 		}),
 		[],
 	);
+	const selectedLanguage = React.useMemo(
+		() => ({
+			changeLanguage: (newLang: string | undefined) => {
+				i18n.changeLanguage(newLang);
+			},
+		}),
+		[],
+	);
 
 	return (
-		<ColorModeContext.Provider value={colorMode}>
+		<UserPreferedContext.Provider value={{ ...colorMode, ...selectedLanguage }}>
 			<ThemeProvider theme={mode === 'dark' ? { ...darkTheme, direction: i18n.dir } : { ...lightTheme, direction: i18n.dir }}>
 				<CssBaseline /> {children}
 			</ThemeProvider>
-		</ColorModeContext.Provider>
+		</UserPreferedContext.Provider>
 	);
 }
 

@@ -29,7 +29,7 @@ import {
 
 import { user_prefered_language, user_prefered_theme_mode } from '../../shared/constants';
 import useUserData from '../../shared/hooks/useUserData';
-import { ColorModeContext } from '../../shared/Contexts/ColorMode';
+import { UserPreferedContext } from '../../shared/Contexts/UserPreferedContext';
 
 const languages = ['en', 'ar',];
 const pages = ['Products', 'Pricing', 'Blog'];
@@ -39,7 +39,7 @@ function ResponsiveAppBar() {
   const { t, i18n } = useTranslation();
   const { user } = useUserData()
   const { palette: { mode, secondary } } = useTheme()
-  const colorMode = React.useContext(ColorModeContext);
+  const colorMode = React.useContext(UserPreferedContext);
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElLang, setAnchorElLang] = React.useState<null | HTMLElement>(null);
@@ -70,7 +70,7 @@ function ResponsiveAppBar() {
 
 
   function handleLanguageChange(lang: string) {
-    i18n.changeLanguage(lang);
+    colorMode.changeLanguage(lang);
     localStorage.setItem(user_prefered_language, lang);
     handleCloseLangMenu();
   }
