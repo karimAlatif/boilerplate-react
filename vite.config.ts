@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+import { esbuildCommonjs } from '@originjs/vite-plugin-commonjs'
 
 export default defineConfig({
 	build: {
@@ -7,5 +8,10 @@ export default defineConfig({
 	},
 	optimizeDeps: {
 		exclude: ['js-big-decimal'],
+		esbuildOptions:{
+          plugins:[
+            esbuildCommonjs(['ui-widgets','ui-widgets/'])
+          ]
 	},
+}
 });
