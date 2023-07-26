@@ -26,7 +26,7 @@ const LandingPage = (props: Props) => {
   }
   return (
     <div>
-      {/* <BasicCard fetch={getData} title='hello'  /> */}
+      <BasicCard fetch={getData} title='hello'  />
       <ChipA text={"from UI-WIDGETS"}/>
       {/* <BasicCard {...basicCardConfigs} /> */}
     </div>
