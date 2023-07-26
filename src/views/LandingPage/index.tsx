@@ -1,7 +1,6 @@
-import { init } from 'kuido-sdk'
-import { Options } from 'kuido-sdk/lib/adapters/auth'
-import { BasicCard } from "ui-widgets"
-// @ts-ignore  
+import { init } from 'kuido-sdk';
+import { Options } from 'kuido-sdk/lib/adapters/auth';
+import { ChipA, BasicCard } from "ui-widgets";
 
 type Props = {}
 
@@ -15,10 +14,10 @@ const LandingPage = (props: Props) => {
   // init({
 
   // })
-  // const getData = (): Promise<number> => {
-  //   return new Promise((resolve, reject) => resolve(4
-  //   ));
-  // }
+  const getData = (): Promise<number> => {
+    return new Promise((resolve, reject) => resolve(4
+    ));
+  }
   const basicCardConfigs = {
     title: 'Devices',
     fetch: () => Promise.resolve(1),
@@ -27,7 +26,9 @@ const LandingPage = (props: Props) => {
   }
   return (
     <div>
-      <BasicCard {...basicCardConfigs} />
+      {/* <BasicCard fetch={getData} title='hello'  /> */}
+      <ChipA text={"from UI-WIDGETS"}/>
+      {/* <BasicCard {...basicCardConfigs} /> */}
     </div>
   )
 }

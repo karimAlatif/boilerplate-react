@@ -4,9 +4,20 @@ import './500.css';
 import { useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
+
+// 
+
+
 interface Props {
 	onReset: () => void;
 }
+
+const basicCardConfigs = {
+    title: 'Devices',
+    fetch: () => Promise.resolve(1),
+    minValue: 5,
+    maxValue: 10,
+  }
 
 export default function Page_500({ onReset }: Props) {
 	const { t } = useTranslation();
@@ -28,8 +39,9 @@ export default function Page_500({ onReset }: Props) {
 			>
 				<Box fontStyle={{ textAlign: 'center' }}>
 					<h1>500</h1>
+
 					<h2>
-						{t('UNEXPECTED_ERROR')} <b>:(</b>
+						{t('UNEXPECTED_ERRddddOR')} <b>:(</b>
 					</h2>
 					<div className="gears">
 						<div className="gear one">

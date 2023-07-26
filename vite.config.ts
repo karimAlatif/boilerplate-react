@@ -6,6 +6,7 @@ export default defineConfig({
 		outDir: 'build',
 		sourcemap: true,
 	},
+	// define: { "process.env.NODE_ENV": '"development"' },
 	optimizeDeps: {
 		exclude: ['js-big-decimal'],
 		esbuildOptions:{
